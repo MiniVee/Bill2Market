@@ -29,4 +29,11 @@ public class ChatController {
         return responseService.getSingleResult(chatService.findChat(itemId, Integer.parseInt(auth.getName())));
     }
 
+    @ApiOperation(value = "알림", notes = "알림을 조회한다.")
+    @GetMapping("/alarm")
+    public CommonResult myAlarm(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return responseService.getSingleResult(chatService.chatAlarmList(Integer.parseInt(auth.getName())));
+    }
 }

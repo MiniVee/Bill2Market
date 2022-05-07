@@ -5,10 +5,7 @@ import com.amazonaws.services.s3.model.*;
 import com.example.demo.exception.chat.ChatFileCreateFailedException;
 import com.example.demo.exception.client.ClientNotFoundException;
 import com.example.demo.exception.item.ItemNotFoundException;
-import com.example.demo.model.chat.Chat;
-import com.example.demo.model.chat.ChatMessage;
-import com.example.demo.model.chat.ChatMessageEvent;
-import com.example.demo.model.chat.ChatResponseDTO;
+import com.example.demo.model.chat.*;
 import com.example.demo.model.client.Client;
 import com.example.demo.model.item.Item;
 import com.example.demo.repository.ChatRepository;
@@ -125,6 +122,13 @@ public class ChatServiceImpl implements ChatService{
         }catch (IOException e) {
             log.error("파일 입력에 문제가 발생하였습니다. {}", e.getMessage());
         }
+    }
+
+    @Override
+    public ChatAlarmResponseDTO chatAlarmList(Integer clientIndex) {
+
+
+        return chatRepository.findByClientIndex(clientIndex);
     }
 
 }
