@@ -13,6 +13,6 @@ public interface ContractService {
     public Contract modifyContract(Integer contractId, String endDate);
     public void scheduleContractOneDayBeforeExpireDate();
     public void scheduleContractExpireDate();
-    public TokenRequestDTO tokenRequestDTO(Integer contractId);
+    public TokenResponseDTO tokenRequestDTO();
 
 }
