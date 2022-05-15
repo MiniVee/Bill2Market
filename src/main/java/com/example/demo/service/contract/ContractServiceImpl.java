@@ -5,10 +5,7 @@ import com.example.demo.exception.contract.ContractNotFoundException;
 import com.example.demo.model.chat.Chat;
 import com.example.demo.model.chat.ChatMessage;
 import com.example.demo.model.chat.MessageType;
-import com.example.demo.model.contract.Contract;
-import com.example.demo.model.contract.ContractRequestDTO;
-import com.example.demo.model.contract.ContractScheduleDTO;
-import com.example.demo.model.contract.ContractType;
+import com.example.demo.model.contract.*;
 import com.example.demo.repository.ChatRepository;
 import com.example.demo.repository.ContractRepository;
 import com.example.demo.repository.ContractRepositoryCustom;
@@ -93,6 +90,13 @@ public class ContractServiceImpl implements ContractService{
                     );
                 }
         );
+    }
+
+    @Override
+    public TokenRequestDTO tokenRequestDTO(Integer contractId) {
+
+
+        return null;
     }
 
 }
