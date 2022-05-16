@@ -87,9 +87,10 @@ public class ContractController {
 
     @ApiOperation(value = "보증금 돌려주기 구현", notes = "빌리페이 계좌에서 사용자 계좌에 이체된 보증금을 돌려준다.")
     @PostMapping("/deposit")
-    public CommonResult contractDeposit(@RequestBody TokenRequestDTO tokenRequestDTO){
-        contractService.tokenRequestDTO();
-        return responseService.getSingleResult();
+    public CommonResult contractDeposit(@RequestParam("contract-id")Integer contractId){
+        contractService.tokenRequestDTO(contractId);
+        return null;
+//        return responseService.getSingleResult();
     }
 
 }

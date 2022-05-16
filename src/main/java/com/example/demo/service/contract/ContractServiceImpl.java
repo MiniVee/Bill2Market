@@ -102,10 +102,16 @@ public class ContractServiceImpl implements ContractService{
     }
 
     @Override
-    public TokenResponseDTO tokenRequestDTO() {
+    public TokenResponseDTO tokenRequestDTO(Integer contractId) {
         String bankUrl = "https://testapi.openbanking.or.kr";
 
-        URI uri = UriComponentsBuilder.fromUriString(bankUrl).path("/oauth/2.0/token").encode().build().toUri();
+        URI uri = UriComponentsBuilder
+                .fromUriString(bankUrl)
+                .path("/oauth/2.0/token")
+                .encode()
+                .build()
+                .toUri();
+
         MultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("client_id", "07077a91-b1f4-4297-bbc6-33d5aad52f03");
         requestParams.add("client_secret", "69f797e1-36a9-40b2-8a56-65f4f760213a");
@@ -113,13 +119,16 @@ public class ContractServiceImpl implements ContractService{
         requestParams.add("grant_type", "client_credentials");
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, requestParams, String.class);
+        System.out.println(responseEntity.getBody());
         TokenResponseDTO tokenResponseDTO = null;
         if(responseEntity.getStatusCode() == HttpStatus.OK){
             tokenResponseDTO = gson.fromJson(responseEntity.getBody(), TokenResponseDTO.class);
+
         }
-
-
+        System.out.println(tokenResponseDTO);
         return tokenResponseDTO;
     }
+
+
 
 }

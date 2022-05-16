@@ -2,7 +2,6 @@ package com.example.demo.service.contract;
 
 import com.example.demo.model.contract.Contract;
 import com.example.demo.model.contract.ContractRequestDTO;
-import com.example.demo.model.contract.TokenRequestDTO;
 import com.example.demo.model.contract.TokenResponseDTO;
 
 public interface ContractService {
@@ -13,6 +12,7 @@ public interface ContractService {
     public Contract modifyContract(Integer contractId, String endDate);
     public void scheduleContractOneDayBeforeExpireDate();
     public void scheduleContractExpireDate();
-    public TokenResponseDTO tokenRequestDTO();
+    public TokenResponseDTO tokenRequestDTO(Integer contractId);
+
 
 }

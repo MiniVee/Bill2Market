@@ -7,7 +7,7 @@ public class TokenResponseDTO {
 
     private String access_token;
     private String token_type;
-    private Integer expire_in;
+    private String expire_in;
     private String scope;
     private String client_use_code;
 
