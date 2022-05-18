@@ -1,16 +1,21 @@
 package com.example.demo.model.contract;
 
+import com.example.demo.model.client.Client;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class DepositForClientDTO {
 
     private Integer contractId;
     private Integer deposit;
     private Integer price;
-    private Integer lenterIndex;
     private Integer ownerIndex;
-    private String clientName;
-    private String fintechId;
+    private Integer lenterIndex;
+    private String ownerNickname;
+    private String lenterNickname;
+    private String ownerFintechId;
+    private String lenterFintechId;
 }
 

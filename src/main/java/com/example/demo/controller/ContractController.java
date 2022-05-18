@@ -94,7 +94,7 @@ public class ContractController {
         contractBankService.tokenRequestDTO();
         System.out.println(contractId+" 몇번");
         //임시로 null
-//        contractBankService.depositTransfer(contractId, clientIndex);
+        contractBankService.depositTransfer(contractId, clientIndex);
         return responseService.getSuccessfulResult();
     }
 
