@@ -9,6 +9,7 @@ import com.example.demo.model.contract.TokenRequestDTO;
 import com.example.demo.model.response.CommonResult;
 import com.example.demo.service.ResponseService;
 import com.example.demo.service.chat.MessageService;
+import com.example.demo.service.contract.ContractBankService;
 import com.example.demo.service.contract.ContractService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,7 @@ public class ContractController {
     private final ResponseService responseService;
     private final ContractService contractService;
     private final MessageService messageService;
+    private final ContractBankService contractBankService;
 
     @ApiOperation(value = "계약 정보 조회", notes = "계약 정보를 조회한다.")
     @GetMapping("/{contract-id}")
@@ -87,10 +89,13 @@ public class ContractController {
 
     @ApiOperation(value = "보증금 돌려주기 구현", notes = "빌리페이 계좌에서 사용자 계좌에 이체된 보증금을 돌려준다.")
     @PostMapping("/deposit")
-    public CommonResult contractDeposit(@RequestParam("contract-id")Integer contractId){
-        contractService.tokenRequestDTO(contractId);
-        return null;
-//        return responseService.getSingleResult();
+    public CommonResult contractDeposit(@RequestParam("contract-id")Integer contractId, Integer clientIndex){
+        //진행된 계약이 없으면 오류나게 처리 구현
+        contractBankService.tokenRequestDTO();
+        System.out.println(contractId+" 몇번");
+        //임시로 null
+//        contractBankService.depositTransfer(contractId, clientIndex);
+        return responseService.getSuccessfulResult();
     }
 
 }

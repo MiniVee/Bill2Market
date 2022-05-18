@@ -12,7 +12,5 @@ public interface ContractService {
     public Contract modifyContract(Integer contractId, String endDate);
     public void scheduleContractOneDayBeforeExpireDate();
     public void scheduleContractExpireDate();
-    public TokenResponseDTO tokenRequestDTO(Integer contractId);
-
 
 }
