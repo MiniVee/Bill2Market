@@ -1,6 +1,5 @@
 package com.example.demo.model.contract;
 
-import com.example.demo.model.client.Client;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,7 +1,6 @@
 package com.example.demo.model.contract;
 
 import com.example.demo.model.chat.Chat;
-import com.example.demo.model.client.Client;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,7 +12,7 @@ import java.time.LocalDate;
 @Builder
 @Entity(name="Contract")
 @NamedNativeQuery(
-        name = "findLenterInfo",
+        name = "findClientInfo",
         query = "SELECT DISTINCT Contract.contract_id, deposit, price, Chat.owner_index, Chat.lenter_index, Client.nickname AS 'owner_nickname', Client2.nickname AS 'lenter_nickname', Billy_Pay.fintech_id AS 'owner_fintech_id', Billy_Pay2.fintech_id AS 'lenter_fintech_id' " +
                 "FROM Contract " +
                 "INNER JOIN Chat ON Contract.chat_id = Chat.chat_id " +
