@@ -58,18 +58,10 @@ public class ContractBankServiceImpl implements ContractBankService {
 
     @Override
     public void depositLenterTransfer(Integer contractId, Integer clientIndex) {//빌리페이 계좌 -> 사용자 계좌: lenter에게 보증금 환급
+
         List<DepositForClientDTO> lenterTemp = contractRepository.findLenterByContractId(contractId);
 
         List<DepositInfoReqListDTO> reqList = new ArrayList<>();
-        System.out.println(lenterTemp.size());
-        System.out.println("contract ID : " + lenterTemp.get(0).getContractId());
-        System.out.println("deposit : " + lenterTemp.get(0).getDeposit());
-        System.out.println("fintech ID : " + lenterTemp.get(0).getLenterFintechId());
-        System.out.println("price : " + lenterTemp.get(0).getPrice());
-        System.out.println("lenterIndex : " + lenterTemp.get(0).getLenterIndex());
-        System.out.println("ownerIndex : " + lenterTemp.get(0).getOwnerIndex());
-        System.out.println("name : " + lenterTemp.get(0).getLenterNickname());
-
         DepositInfoReqListDTO depositInfoReqListDTO = new DepositInfoReqListDTO();
         depositInfoReqListDTO.setTran_no("1");
         depositInfoReqListDTO.setBank_tran_id(OpenBankUtil.getRandBankTranId("M202200946"));
@@ -99,7 +91,7 @@ public class ContractBankServiceImpl implements ContractBankService {
                 .cntr_account_type("N")
                 .contr_account_num("3521080943483")
                 .wd_pass_phrase("NONE")
-                .wd_print_content("보증금 반납 및 대여료 전송")
+                .wd_print_content("보증금 반납")
                 .name_check_option("off")
                 .tran_dtime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")))
                 .req_cnt("1")
@@ -109,17 +101,18 @@ public class ContractBankServiceImpl implements ContractBankService {
         HttpEntity<String> httpEntity = new HttpEntity<String>(gson.toJson(depositInfoDTO), httpHeaders);
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, httpEntity, String.class);
 
-        System.out.println("TTEST"+depositInfoDTO);
+        System.out.println("lenter transfer 성공");
+        System.out.println(depositInfoDTO);
 
         if(responseEntity.getStatusCode() != HttpStatus.OK){
-            //익셉션 처리 200이어도 값이 제대로 안들어가는 경우 있음.
 
-            System.out.println("\nGood Test");
+            //익셉션 처리 200이어도 값이 제대로 안들어가는 경우 있음.
         }
     }
 
     @Override
     public void depositOwnerTransfer(Integer contractId, Integer clientIndex) { // 빌리페이 계좌 -> 사용자 계좌: owner에게 대여료 전송
+
         List<DepositForClientDTO> ownerTemp = contractRepository.findLenterByContractId(contractId);
 
         List<DepositInfoReqListDTO> reqList = new ArrayList<>();
@@ -152,7 +145,7 @@ public class ContractBankServiceImpl implements ContractBankService {
                 .cntr_account_type("N")
                 .contr_account_num("3521080943483")
                 .wd_pass_phrase("NONE")
-                .wd_print_content("보증금 반납 및 대여료 전송")
+                .wd_print_content("대여료 전송")
                 .name_check_option("off")
                 .tran_dtime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")))
                 .req_cnt("1")
@@ -162,12 +155,11 @@ public class ContractBankServiceImpl implements ContractBankService {
         HttpEntity<String> httpEntity = new HttpEntity<String>(gson.toJson(depositInfoDTO), httpHeaders);
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, httpEntity, String.class);
 
-        System.out.println("TTEST"+depositInfoDTO);
+        System.out.println("owner transfer 성공");
+        System.out.println(depositInfoDTO);
 
         if(responseEntity.getStatusCode() != HttpStatus.OK){
             //익셉션 처리 200이어도 값이 제대로 안들어가는 경우 있음.
-
-            System.out.println("\nGood Test");
         }
     }
 }
