@@ -11,6 +11,8 @@ public class DepositInfoReqListDTO {
     private String print_content; //빌리페이 보증금 환급, 빌리페이 대여료
     private String tran_amt; // deposit, price
     private String req_client_name; // lenterName, ownerName
+    private String req_client_account_num;//
+    private String req_client_fintech_use_num;//
     private String req_client_num; // BILL + lenterIndex, BILL + ownerIndex
     private String transfer_purpose;// TR, ST
 

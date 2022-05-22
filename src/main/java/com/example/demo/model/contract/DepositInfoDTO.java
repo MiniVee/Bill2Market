@@ -12,7 +12,7 @@ import java.util.List;
 public class DepositInfoDTO {
 
     private String cntr_account_type; //N
-    private String contr_account_num; //빌리페이 계좌번호
+    private String cntr_account_num; //빌리페이 계좌번호
     private String wd_pass_phrase; //None
     private String wd_print_content; //보증금 반납및 대여료 전송
     private String name_check_option; // off

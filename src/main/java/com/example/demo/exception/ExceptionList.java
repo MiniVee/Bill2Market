@@ -21,7 +21,9 @@ public enum ExceptionList {
     EXIST_NICKNAME(-1010, "현재 존재하는 닉네임입니다."),
     CHAT_NOT_FOUND(-1011, "존재하지 않는 채팅입니다."),
     CHATFILE_CREATE_FAIL(-1012, "채팅 파일 생성에 실패하였습니다."),
-    CONTRACT_NOT_FOUND(-1013, "해당 계약이 존재하지 않습니다.");
+    CONTRACT_NOT_FOUND(-1013, "해당 계약이 존재하지 않습니다."),
+    TRANSFER_ERROR(-1030, "해당 계약의 보증금 환급 혹은 대여료 지급에 실패하였습니다."),
+    TOKEN_NOT_FOUND_ERROR(-1031, "토큰의 정보가 존재하지 않습니다.");
 
     private final int code;
     private final String message;

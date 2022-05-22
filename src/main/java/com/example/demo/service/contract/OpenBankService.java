@@ -2,7 +2,7 @@ package com.example.demo.service.contract;
 
 import com.example.demo.model.contract.TokenResponseDTO;
 
-public interface ContractBankService {
+public interface OpenBankService {
 
     public TokenResponseDTO tokenRequestDTO();
     public void depositLenterTransfer(Integer contractId, Integer clientIndex);

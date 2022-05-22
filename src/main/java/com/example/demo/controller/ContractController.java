@@ -8,7 +8,7 @@ import com.example.demo.model.contract.ContractRequestDTO;
 import com.example.demo.model.response.CommonResult;
 import com.example.demo.service.ResponseService;
 import com.example.demo.service.chat.MessageService;
-import com.example.demo.service.contract.ContractBankService;
+import com.example.demo.service.contract.OpenBankService;
 import com.example.demo.service.contract.ContractService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +27,7 @@ public class ContractController {
     private final ResponseService responseService;
     private final ContractService contractService;
     private final MessageService messageService;
-    private final ContractBankService contractBankService;
+    private final OpenBankService contractBankService;
 
     @ApiOperation(value = "계약 정보 조회", notes = "계약 정보를 조회한다.")
     @GetMapping("/{contract-id}")

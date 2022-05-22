@@ -1,5 +1,7 @@
 package com.example.demo.service.contract;
 
+import com.example.demo.exception.contract.ContractTransferErrorException;
+import com.example.demo.exception.contract.TokenNotFoundException;
 import com.example.demo.model.contract.*;
 import com.example.demo.repository.ContractRepository;
 import com.example.demo.util.OpenBankUtil;
@@ -22,7 +24,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class ContractBankServiceImpl implements ContractBankService {
+public class OpenBankServiceImpl implements OpenBankService {
 
     private final RestTemplate restTemplate;
     private final Gson gson;
@@ -51,7 +53,8 @@ public class ContractBankServiceImpl implements ContractBankService {
         if(responseEntity.getStatusCode() == HttpStatus.OK){
             tokenResponseDTO = gson.fromJson(responseEntity.getBody(), TokenResponseDTO.class);
 
-        }
+        }else throw new TokenNotFoundException();
+
         System.out.println(tokenResponseDTO);
         return tokenResponseDTO;
     }
@@ -65,7 +68,7 @@ public class ContractBankServiceImpl implements ContractBankService {
         DepositInfoReqListDTO depositInfoReqListDTO = new DepositInfoReqListDTO();
         depositInfoReqListDTO.setTran_no("1");
         depositInfoReqListDTO.setBank_tran_id(OpenBankUtil.getRandBankTranId("M202200946"));
-        depositInfoReqListDTO.setFintech_use_num(lenterTemp.get(0).getLenterFintechId());
+        depositInfoReqListDTO.setFintech_use_num(lenterTemp.get(0).getLenterFintechId()); //빌리페이 계좌
         depositInfoReqListDTO.setPrint_content("빌리페이 보증금 환급");
         depositInfoReqListDTO.setTran_amt(lenterTemp.get(0).getPrice().toString());
         depositInfoReqListDTO.setReq_client_name(lenterTemp.get(0).getLenterNickname());
@@ -74,7 +77,7 @@ public class ContractBankServiceImpl implements ContractBankService {
 
         reqList.add(depositInfoReqListDTO);
 
-        String depositURL = "https://openapi.openbanking.or.kr";
+        String depositURL = "https://testapi.openbanking.or.kr";
         URI uri = UriComponentsBuilder
                 .fromUriString(depositURL)
                 .path("/v2.0/transfer/deposit/fin_num")
@@ -89,7 +92,7 @@ public class ContractBankServiceImpl implements ContractBankService {
 
         DepositInfoDTO depositInfoDTO = DepositInfoDTO.builder()
                 .cntr_account_type("N")
-                .contr_account_num("3521080943483")
+                .cntr_account_num("3521080943483")
                 .wd_pass_phrase("NONE")
                 .wd_print_content("보증금 반납")
                 .name_check_option("off")
@@ -102,11 +105,10 @@ public class ContractBankServiceImpl implements ContractBankService {
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, httpEntity, String.class);
 
         System.out.println("lenter transfer 성공");
-        System.out.println(depositInfoDTO);
+        System.out.println(responseEntity.getBody());
 
         if(responseEntity.getStatusCode() != HttpStatus.OK){
-
-            //익셉션 처리 200이어도 값이 제대로 안들어가는 경우 있음.
+            throw new ContractTransferErrorException();
         }
     }
 
@@ -119,7 +121,7 @@ public class ContractBankServiceImpl implements ContractBankService {
         DepositInfoReqListDTO depositInfoReqListDTO = new DepositInfoReqListDTO();
         depositInfoReqListDTO.setTran_no("1");
         depositInfoReqListDTO.setBank_tran_id(OpenBankUtil.getRandBankTranId("M202200946"));
-        depositInfoReqListDTO.setFintech_use_num(ownerTemp.get(0).getOwnerFintechId());
+        depositInfoReqListDTO.setFintech_use_num(ownerTemp.get(0).getOwnerFintechId()); //빌리페이 계좌
         depositInfoReqListDTO.setPrint_content("대여료 전송");
         depositInfoReqListDTO.setTran_amt(ownerTemp.get(0).getDeposit().toString());
         depositInfoReqListDTO.setReq_client_name(ownerTemp.get(0).getOwnerNickname());
@@ -128,7 +130,7 @@ public class ContractBankServiceImpl implements ContractBankService {
 
         reqList.add(depositInfoReqListDTO);
 
-        String depositURL = "https://openapi.openbanking.or.kr";
+        String depositURL = "https://testapi.openbanking.or.kr";
         URI uri = UriComponentsBuilder
                 .fromUriString(depositURL)
                 .path("/v2.0/transfer/deposit/fin_num")
@@ -143,7 +145,7 @@ public class ContractBankServiceImpl implements ContractBankService {
 
         DepositInfoDTO depositInfoDTO = DepositInfoDTO.builder()
                 .cntr_account_type("N")
-                .contr_account_num("3521080943483")
+                .cntr_account_num("3521080943483")
                 .wd_pass_phrase("NONE")
                 .wd_print_content("대여료 전송")
                 .name_check_option("off")
@@ -156,10 +158,10 @@ public class ContractBankServiceImpl implements ContractBankService {
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, httpEntity, String.class);
 
         System.out.println("owner transfer 성공");
-        System.out.println(depositInfoDTO);
+        System.out.println(responseEntity.getBody());
 
         if(responseEntity.getStatusCode() != HttpStatus.OK){
-            //익셉션 처리 200이어도 값이 제대로 안들어가는 경우 있음.
+            throw new ContractTransferErrorException();
         }
     }
 }

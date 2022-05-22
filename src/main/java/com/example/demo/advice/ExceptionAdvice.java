@@ -8,6 +8,8 @@ import com.example.demo.exception.chat.ChatNotFoundException;
 import com.example.demo.exception.client.*;
 import com.example.demo.exception.common.HttpFailException;
 import com.example.demo.exception.contract.ContractNotFoundException;
+import com.example.demo.exception.contract.ContractTransferErrorException;
+import com.example.demo.exception.contract.TokenNotFoundException;
 import com.example.demo.exception.item.ItemNotFoundException;
 import com.example.demo.model.response.CommonResult;
 import com.example.demo.service.ResponseService;
@@ -114,6 +116,18 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult contractNotFoundException(){
         return responseService.getFailResult(ExceptionList.CONTRACT_NOT_FOUND.getCode(), ExceptionList.CONTRACT_NOT_FOUND.getMessage());
+    }
+
+    @ExceptionHandler(ContractTransferErrorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult ContractTransferErrorException(){
+        return responseService.getFailResult(ExceptionList.TRANSFER_ERROR.getCode(), ExceptionList.TRANSFER_ERROR.getMessage());
+    }
+
+    @ExceptionHandler(TokenNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult TokenNotFoundException(){
+        return responseService.getFailResult(ExceptionList.TOKEN_NOT_FOUND_ERROR.getCode(), ExceptionList.TOKEN_NOT_FOUND_ERROR.getMessage());
     }
 
 }
