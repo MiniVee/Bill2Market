@@ -49,10 +49,17 @@ public class ContractServiceImpl implements ContractService{
         return contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
     }
 
+//    @Override
+//    public Contract modifyContract(Integer contractId, Integer contractStatus) {
+//        Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
+//        contract.setContractStatus(ContractType.values()[contractStatus]);
+//        contract.setContractDate(LocalDate.now());
+//        return contractRepository.save(contract);
+//    }
+
     @Override
-    public Contract modifyContract(Integer contractId, Integer contractStatus) {
+    public Contract modifyContract(Integer contractId, Integer permissionStatus) {
         Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
-        contract.setContractStatus(ContractType.values()[contractStatus]);
         contract.setContractDate(LocalDate.now());
         return contractRepository.save(contract);
     }

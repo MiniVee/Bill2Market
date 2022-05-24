@@ -9,7 +9,8 @@ public interface ContractService {
 
     public Contract addContract(ContractRequestDTO contractRequestDTO);
     public Contract getContract(Integer contractId);
-    public Contract modifyContract(Integer contractId, Integer contractStatus);
+//    public Contract modifyContract(Integer contractId, Integer contractStatus);
+    public Contract modifyContract(Integer contractId, Integer permissionStatus);
     public Contract modifyContract(Integer contractId, String endDate);
     public Slice<ContractIBorrowedResponseDTO> findBorrowedItemList(Integer clientIndex, Integer page);
     public void scheduleContractOneDayBeforeExpireDate();

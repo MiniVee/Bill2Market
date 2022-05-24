@@ -61,18 +61,25 @@ public class ContractController {
         return responseService.getSuccessfulResult();
     }
 
+//    @ApiOperation(value = "계약 상태 변경", notes = "계약의 상태를 변경한다.")
+//    @PutMapping("/status/{contract-id}")
+//    public CommonResult modifyContractStatus(@PathVariable("contract-id") Integer contractId, @RequestParam Integer contractStatus){
+//        Contract contract = contractService.modifyContract(contractId, contractStatus);
+//        ChatMessage chatMessage = ChatMessage.builder()
+//                .chatType(ChatMessage.ChatType.MESSAGE)
+//                .chatId(contract.getChat().getChatId())
+//                .senderNickname(contract.getChat().getOwner().getNickname())
+//                .messageType((contractStatus == 1)? MessageType.TRANS_ACCEPT : MessageType.TRANS_END)
+//                .message(String.valueOf(contract.getContractId()))
+//                .build();
+//        messageService.message(chatMessage, contract.getChat().getChatId());
+//        return responseService.getSuccessfulResult();
+//    }
+
     @ApiOperation(value = "계약 상태 변경", notes = "계약의 상태를 변경한다.")
     @PutMapping("/status/{contract-id}")
-    public CommonResult modifyContractStatus(@PathVariable("contract-id") Integer contractId, @RequestParam Integer contractStatus){
-        Contract contract = contractService.modifyContract(contractId, contractStatus);
-        ChatMessage chatMessage = ChatMessage.builder()
-                .chatType(ChatMessage.ChatType.MESSAGE)
-                .chatId(contract.getChat().getChatId())
-                .senderNickname(contract.getChat().getOwner().getNickname())
-                .messageType((contractStatus == 1)? MessageType.TRANS_ACCEPT : MessageType.TRANS_END)
-                .message(String.valueOf(contract.getContractId()))
-                .build();
-        messageService.message(chatMessage, contract.getChat().getChatId());
+    public CommonResult modifyContractStatus(@PathVariable("contract-id") Integer contractId, @RequestParam Integer permissionStatus){
+        Contract contract = contractService.modifyContract(contractId, permissionStatus);
         return responseService.getSuccessfulResult();
     }
 
