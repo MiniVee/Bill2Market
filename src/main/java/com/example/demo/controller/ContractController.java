@@ -4,6 +4,7 @@ import com.example.demo.model.bank.TransferRequestDTO;
 import com.example.demo.model.chat.ChatMessage;
 import com.example.demo.model.chat.MessageType;
 import com.example.demo.model.contract.Contract;
+import com.example.demo.model.contract.ContractChatRequestDTO;
 import com.example.demo.model.contract.ContractMessage;
 import com.example.demo.model.contract.ContractRequestDTO;
 import com.example.demo.model.response.CommonResult;
@@ -41,11 +42,11 @@ public class ContractController {
     }
 
     @ApiOperation(value = "채팅에 대한 계약 작성", notes = "채팅 정보에 맞는 계약을 작성한다.")
-    @PostMapping("/{chat-id}")
-    public CommonResult contract(@PathVariable("chat-id") Integer chatId, @RequestBody ContractRequestDTO contractRequestDTO){
+    @PostMapping("/{chat-id}") //채팅을 통한 계약 작성 API 수정
+    public CommonResult contract(@PathVariable("chat-id") Integer chatId, @RequestBody ContractChatRequestDTO contractChatRequestDTO){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        contractRequestDTO.setChatId(chatId);
-        Contract contract = contractService.addContract(contractRequestDTO);
+        contractChatRequestDTO.setChatId(chatId);
+        Contract contract = contractService.makeContract(contractChatRequestDTO);
         ChatMessage chatMessage = ChatMessage.builder()
                 .chatType(ChatMessage.ChatType.MESSAGE)
                 .chatId(contract.getChat().getChatId())

@@ -33,15 +33,22 @@ public class ContractServiceImpl implements ContractService{
     private final ContractRepositoryCustom contractRepositoryCustom;
 
     @Override
-    public Contract addContract(ContractRequestDTO contractRequestDTO) {
-        Chat chat = chatRepository.findById(contractRequestDTO.getChatId()).orElseThrow(ChatNotFoundException::new);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public Contract makeContract(ContractChatRequestDTO contractChatRequestDTO) {
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return contractRepository.save(Contract.builder()
-                                        .chat(chat)
-                                        .startDate(LocalDate.parse(contractRequestDTO.getStartDate(), formatter))
-                                        .endDate(LocalDate.parse(contractRequestDTO.getEndDate(), formatter))
-                                        .contractStatus(ContractType.REQUEST)
-                                        .build());
+                        .chat(chatRepository.findById(contractChatRequestDTO.getChatId()).orElseThrow(ChatNotFoundException::new))
+                        .contractStatus(ContractType.REQUEST)
+                        .price(contractChatRequestDTO.getPrice())
+                        .deposit(contractChatRequestDTO.getDeposit())
+                        .billpayStatus(BillpayStatus.NOTUSE)
+                        .permissionStatus(PermissionStatus.NOTACCEPT)
+                        .retrieveStatus(RetrieveStatus.RETURNNOTACCEPT)
+                        .contractDate(null)
+                        .startDate(LocalDate.parse(contractChatRequestDTO.getStartDate(), dateTimeFormatter))
+                        .endDate(LocalDate.parse(contractChatRequestDTO.getEndDate(), dateTimeFormatter))
+                        .reviewWrite(ReviewWrite.NOTWRITE)
+                        .build());
     }
 
     @Override
