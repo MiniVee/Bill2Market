@@ -19,16 +19,15 @@ import java.time.LocalDate;
 @Entity(name="Chat")
 @NamedNativeQuery(
         name = "chatList", //itemId추가 + contractId 추가
-        query = "SELECT Contract.contract_id, Chat.item_id,  Chat.chat_id, Chat.file_name, Client.nickname, " +
+        query = "SELECT IFNULL(Contract.contract_id, -1) AS 'contract_id', Chat.item_id,  Chat.chat_id, Chat.file_name, Client.nickname, " +
                 "CASE WHEN Chat.owner_index = :client_index THEN Chat.lenter_index " +
                 "ELSE Chat.owner_index END as opponentIndex " +
                 "FROM Chat " +
                 "INNER JOIN Client ON Client.client_index = CASE WHEN Chat.owner_index = :client_index THEN Chat.lenter_index " +
                 "ELSE Chat.owner_index END " +
-                "INNER JOIN Contract ON Chat.chat_id =  Contract.chat_id " +
+                "LEFT JOIN Contract ON Contract.chat_id=Chat.chat_id "+
                 "WHERE Chat.owner_index = :client_index OR Chat.lenter_index = :client_index " +
                 "ORDER BY Chat.item_id DESC ",
-        
         resultSetMapping = "chatListMapping"
 )
 @SqlResultSetMapping(
